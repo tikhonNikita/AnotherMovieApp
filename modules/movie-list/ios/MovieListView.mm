@@ -30,6 +30,20 @@ using namespace facebook::react;
 
     _view = [[UIView alloc] init];
     [_view setBackgroundColor:[UIColor redColor]];
+    const auto test = [RandomStringGenerator randomStringWithLength: 10];
+    UITextView *text = [[UITextView alloc] init];
+    text.text = test;
+    text.font = [UIFont systemFontOfSize:18];
+    text.backgroundColor = [UIColor lightGrayColor];
+      
+    [_view addSubview:text];
+    text.translatesAutoresizingMaskIntoConstraints = false;
+    [NSLayoutConstraint activateConstraints:@[
+              [text.topAnchor constraintEqualToAnchor:_view.safeAreaLayoutGuide.topAnchor],
+              [text.leadingAnchor constraintEqualToAnchor:_view.leadingAnchor],
+              [text.trailingAnchor constraintEqualToAnchor:_view.trailingAnchor],
+              [text.bottomAnchor constraintEqualToAnchor:_view.bottomAnchor]
+          ]];
 
     self.contentView = _view;
   }

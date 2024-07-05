@@ -2,6 +2,7 @@
 #ifdef RCT_NEW_ARCH_ENABLED
 #import <React/RCTViewComponentView.h>
 #import <UIKit/UIKit.h>
+#import "react_native_movie_list-Swift.h"
 
 #ifndef MovieListViewNativeComponent_h
 #define MovieListViewNativeComponent_h
