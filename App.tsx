@@ -12,7 +12,12 @@ import {MovieListView} from 'react-native-movie-list';
 const App = () => {
   return (
     <SafeAreaView style={styles.container}>
-      <MovieListView style={{width: 300, height: 300}} />
+      <MovieListView
+        style={{
+          width: '100%',
+          height: '100%',
+        }}
+      />
     </SafeAreaView>
   );
 };
