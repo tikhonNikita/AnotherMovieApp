@@ -13,6 +13,7 @@ const App = () => {
   return (
     <SafeAreaView style={styles.container}>
       <MovieListView
+        movies={[]}
         style={{
           width: '100%',
           height: '100%',

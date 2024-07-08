@@ -9,11 +9,7 @@
 
 RCT_EXPORT_MODULE(MovieListView)
 
-- (UIView *)view
-{
-  return [[UIView alloc] init];
-}
 
-RCT_EXPORT_VIEW_PROPERTY(color, NSString)
+RCT_EXPORT_VIEW_PROPERTY(color, NSArray)
 
 @end
