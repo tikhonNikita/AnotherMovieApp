@@ -39,9 +39,10 @@ using namespace facebook::react;
     const auto &oldViewProps = *std::static_pointer_cast<MovieListViewProps const>(_props);
     const auto &newViewProps = *std::static_pointer_cast<MovieListViewProps const>(props);
     
-//    if (oldViewProps.movies != newViewProps.movies) {
-//       //TODO: implement movies change
-//    }
+    //TODO: add comparation between old and new movies
+    NSArray<Movie *> *moviesArray = [self convertToNSArray:newViewProps.movies];
+    [_movie_list_view_controller updateMoviesWithMovies:moviesArray];
+    
     
     [super updateProps:props oldProps:oldProps];
 }
@@ -94,5 +95,22 @@ Class<RCTComponentViewProtocol> MovieListViewCls(void)
         [_movie_list_view_controller didMoveToParentViewController:parentViewController];
     }
 }
+
+- (NSArray<Movie *> *)convertToNSArray:(const std::vector<MovieListViewMoviesStruct> &)moviesStruct {
+    NSMutableArray<Movie *> *moviesArray = [NSMutableArray arrayWithCapacity:moviesStruct.size()];
+
+    for (const auto &movieStruct : moviesStruct) {
+        Movie *movie = [Movie createWithId:movieStruct.id
+                                       url:[NSString stringWithUTF8String:movieStruct.url.c_str()]
+                                     title:[NSString stringWithUTF8String:movieStruct.title.c_str()]
+                          movieDescription:[NSString stringWithUTF8String:movieStruct.movieDescription.c_str()]
+                                    rating:movieStruct.rating];
+        [moviesArray addObject:movie];
+    }
+
+    return [moviesArray copy];
+}
+
+
 
 @end

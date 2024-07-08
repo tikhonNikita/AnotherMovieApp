@@ -21,4 +21,8 @@ import Foundation
         self.movieDescription = movieDescription
         self.rating = rating
     }
+    //need it to be able to create instance in Obj-c
+    @objc public static func create(id: Int, url: String, title: String, movieDescription: String, rating: Double) -> Movie {
+        return Movie(id: id, url: url, title: title, movieDescription: movieDescription, rating: rating)
+    }
 }

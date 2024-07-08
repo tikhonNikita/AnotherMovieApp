@@ -37,6 +37,10 @@ let movies = [
         let viewModel = MovieViewModel(movies: movies)
         return MovieListViewController(viewModel: viewModel)
     }
+    
+    @objc public func updateMovies(movies: [Movie]) -> Void {
+        self.viewModel.updateMovies(newMovies: movies)
+    }
 
 
     private func setupHostingController() {
