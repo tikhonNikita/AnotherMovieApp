@@ -52,20 +52,6 @@ Class<RCTComponentViewProtocol> MovieListViewCls(void)
     return MovieListView.class;
 }
 
-- hexStringToColor:(NSString *)stringToConvert
-{
-    NSString *noHashString = [stringToConvert stringByReplacingOccurrencesOfString:@"#" withString:@""];
-    NSScanner *stringScanner = [NSScanner scannerWithString:noHashString];
-    
-    unsigned hex;
-    if (![stringScanner scanHexInt:&hex]) return nil;
-    int r = (hex >> 16) & 0xFF;
-    int g = (hex >> 8) & 0xFF;
-    int b = (hex) & 0xFF;
-    
-    return [UIColor colorWithRed:r / 255.0f green:g / 255.0f blue:b / 255.0f alpha:1.0f];
-}
-
 - (UIViewController *)parentViewController {
     UIResponder *responder = self;
     while ([responder isKindOfClass:[UIView class]]) {
@@ -110,7 +96,6 @@ Class<RCTComponentViewProtocol> MovieListViewCls(void)
 
     return [moviesArray copy];
 }
-
 
 
 @end
