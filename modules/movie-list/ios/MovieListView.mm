@@ -7,6 +7,9 @@
 
 #import "RCTFabricComponentsPlugins.h"
 
+
+#import "React/RCTConversions.h"
+
 using namespace facebook::react;
 
 @interface MovieListView () <RCTMovieListViewViewProtocol>
@@ -96,6 +99,27 @@ Class<RCTComponentViewProtocol> MovieListViewCls(void)
 
     return [moviesArray copy];
 }
+
+-(void)updateLayoutMetrics:(const facebook::react::LayoutMetrics &)layoutMetrics oldLayoutMetrics:(const facebook::react::LayoutMetrics &)oldLayoutMetrics {
+    CGSize parentSize = self.superview.frame.size;
+    
+    facebook::react::Size size = {parentSize.width, parentSize.height};
+    
+    facebook::react::Rect rect = layoutMetrics.frame;
+    facebook::react::Point point {0, 0};
+    
+    rect.size = size;
+    rect.origin = point;
+    
+    self.contentView.frame = RCTCGRectFromRect(rect);
+    
+    facebook::react::LayoutMetrics updatedLayoutMetrics = layoutMetrics;
+    updatedLayoutMetrics.frame = rect;
+    
+    [super updateLayoutMetrics:updatedLayoutMetrics oldLayoutMetrics:oldLayoutMetrics];
+}
+
+
 
 
 @end
