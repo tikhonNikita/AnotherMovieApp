@@ -6,7 +6,7 @@
  */
 
 import React from 'react';
-import {SafeAreaView, StyleSheet, View} from 'react-native';
+import {SafeAreaView, StyleSheet} from 'react-native';
 import {MovieListView} from 'react-native-movie-list';
 
 const movies = [
@@ -50,14 +50,7 @@ const movies = [
 export const HomeScreen = () => {
   return (
     <SafeAreaView style={styles.container}>
-      <View
-        style={{
-          width: 150,
-          height: 500,
-          backgroundColor: 'blue',
-        }}>
-        <MovieListView movies={movies} />
-      </View>
+      <MovieListView movies={movies} style={StyleSheet.absoluteFill} />
     </SafeAreaView>
   );
 };
