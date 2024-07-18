@@ -6,14 +6,14 @@
  */
 
 import React from 'react';
-import {SafeAreaView, StyleSheet} from 'react-native';
+import {Button, SafeAreaView, StyleSheet} from 'react-native';
 import {MovieListView} from 'react-native-movie-list';
 
 const movies = [
   {
     id: 1,
     url: 'https://hws.dev/paul.jpg',
-    title: 'Sverh kino',
+    title: 'Sverh kina',
     movieDescription: 'Sverh interesnoe kino',
     rating: 3,
   },
@@ -48,9 +48,14 @@ const movies = [
 ];
 
 export const HomeScreen = () => {
+  const [checkInit, setIsCheckInit] = React.useState(false);
   return (
     <SafeAreaView style={styles.container}>
-      <MovieListView movies={movies} style={StyleSheet.absoluteFill} />
+      {checkInit ? (
+        <MovieListView movies={movies} style={StyleSheet.absoluteFill} />
+      ) : (
+        <Button title="Check Init" onPress={() => setIsCheckInit(true)} />
+      )}
     </SafeAreaView>
   );
 };

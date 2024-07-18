@@ -9,15 +9,31 @@ import SwiftUI
 
 struct MovieList: View {
     @ObservedObject var viewModel: MovieViewModel
+    @State private var isOpen: Bool = false
+
     var body: some View {
-        List(viewModel.movies) { movie in
-                    MovieItem(movie: movie)
-                        .padding(.vertical, 4)
-                        .listRowInsets(EdgeInsets())
-                        .listRowSeparator(.hidden)
-        
-                }
-                .listStyle(PlainListStyle())
-                .padding(8)
+        VStack {
+            List(viewModel.movies) { movie in
+                MovieItem(movie: movie)
+                    .padding(.vertical, 4)
+                    .listRowInsets(EdgeInsets())
+                    .listRowSeparator(.hidden)
+                    .onTapGesture {
+                        isOpen = true;
+                    }
+            }
+            .listStyle(PlainListStyle())
+            .padding(8)
+            
+            Button("Open Sheet") {
+                isOpen.toggle()
+            }
+            .padding()
+        }
+        .sheet(isPresented: $isOpen) {
+            Text("Hello World")
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .background(Color.white)
+        }
     }
 }
