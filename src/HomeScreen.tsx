@@ -48,7 +48,7 @@ const movies = [
 ];
 
 export const HomeScreen = () => {
-  const [checkInit, setIsCheckInit] = React.useState(false);
+  const [checkInit, setIsCheckInit] = React.useState(true);
   return (
     <SafeAreaView style={styles.container}>
       {checkInit ? (

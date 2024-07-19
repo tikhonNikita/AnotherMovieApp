@@ -30,9 +30,9 @@ using namespace facebook::react;
     if (self = [super initWithFrame:frame]) {
         static const auto defaultProps = std::make_shared<const MovieListViewProps>();
         _props = defaultProps;
+        self->_movie_list_view_controller = [MovieListViewController createViewController];
         return self;
     }
-    
     return self;
 }
 
@@ -75,23 +75,23 @@ Class<RCTComponentViewProtocol> MovieListViewCls(void)
 }
 
 - (void)setupView {
-    _movie_list_view_controller = [MovieListViewController createViewController];
-    
-    UIViewController *parentViewController = [self parentViewController];
-    if (parentViewController) {
-        [parentViewController addChildViewController:_movie_list_view_controller];
-        [self addSubview:_movie_list_view_controller.view];
-        _movie_list_view_controller.view.translatesAutoresizingMaskIntoConstraints = NO;
-        [NSLayoutConstraint activateConstraints:@[
-            [_movie_list_view_controller.view.topAnchor constraintEqualToAnchor:self.topAnchor],
-            [_movie_list_view_controller.view.leadingAnchor constraintEqualToAnchor:self.leadingAnchor],
-            [_movie_list_view_controller.view.trailingAnchor constraintEqualToAnchor:self.trailingAnchor],
-            [_movie_list_view_controller.view.bottomAnchor constraintEqualToAnchor:self.bottomAnchor]
-        ]];
-        [_movie_list_view_controller didMoveToParentViewController:parentViewController];
-    } else {
-        NSLog(@"Root view controller is nil");
-    }
+    dispatch_async(dispatch_get_main_queue(), ^{
+        UIViewController *parentViewController = [self parentViewController];
+        if (parentViewController) {
+            UIView *swiftUIView = self->_movie_list_view_controller.view;
+            [self addSubview:swiftUIView];
+            swiftUIView.translatesAutoresizingMaskIntoConstraints = NO;
+            [NSLayoutConstraint activateConstraints:@[
+                [swiftUIView.topAnchor constraintEqualToAnchor:self.topAnchor],
+                [swiftUIView.leadingAnchor constraintEqualToAnchor:self.leadingAnchor],
+                [swiftUIView.trailingAnchor constraintEqualToAnchor:self.trailingAnchor],
+                [swiftUIView.bottomAnchor constraintEqualToAnchor:self.bottomAnchor]
+            ]];
+
+            [parentViewController addChildViewController:self->_movie_list_view_controller];
+            [self->_movie_list_view_controller didMoveToParentViewController:parentViewController];
+        }
+    });
 }
 
 - (NSArray<Movie *> *)convertToNSArray:(const std::vector<MovieListViewMoviesStruct> &)moviesStruct {
