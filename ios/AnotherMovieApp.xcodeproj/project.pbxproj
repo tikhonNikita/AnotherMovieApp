@@ -12,6 +12,7 @@
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		2500A839C856B954CB8306EA /* libPods-AnotherMovieApp-AnotherMovieAppTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C7B99561F9BCBA5EA3FEFF14 /* libPods-AnotherMovieApp-AnotherMovieAppTests.a */; };
+		312815462C4AD07700106FDC /* MaterialCommunityIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 312815452C4AD07700106FDC /* MaterialCommunityIcons.ttf */; };
 		6037E4790FD03AB847AA6444 /* libPods-AnotherMovieApp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 166759D01D436513E3D954F2 /* libPods-AnotherMovieApp.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		A908CD613AC0563BAE570630 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 44B4BF02022DEAF37CB1846D /* PrivacyInfo.xcprivacy */; };
@@ -40,6 +41,7 @@
 		13B07FB81A68108700A75B9A /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = PrivacyInfo.xcprivacy; path = AnotherMovieApp/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		166759D01D436513E3D954F2 /* libPods-AnotherMovieApp.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-AnotherMovieApp.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		27076224798E8E6DDC8A66A8 /* Pods-AnotherMovieApp-AnotherMovieAppTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AnotherMovieApp-AnotherMovieAppTests.debug.xcconfig"; path = "Target Support Files/Pods-AnotherMovieApp-AnotherMovieAppTests/Pods-AnotherMovieApp-AnotherMovieAppTests.debug.xcconfig"; sourceTree = "<group>"; };
+		312815452C4AD07700106FDC /* MaterialCommunityIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = MaterialCommunityIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialCommunityIcons.ttf"; sourceTree = "<group>"; };
 		44B4BF02022DEAF37CB1846D /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xml; name = PrivacyInfo.xcprivacy; path = AnotherMovieApp/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		75B5BE8756E0089568A61C2D /* Pods-AnotherMovieApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AnotherMovieApp.debug.xcconfig"; path = "Target Support Files/Pods-AnotherMovieApp/Pods-AnotherMovieApp.debug.xcconfig"; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = AnotherMovieApp/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -121,6 +123,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				312815452C4AD07700106FDC /* MaterialCommunityIcons.ttf */,
 				13B07FAE1A68108700A75B9A /* AnotherMovieApp */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* AnotherMovieAppTests */,
@@ -249,6 +252,7 @@
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				A908CD613AC0563BAE570630 /* PrivacyInfo.xcprivacy in Resources */,
+				312815462C4AD07700106FDC /* MaterialCommunityIcons.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -317,6 +321,8 @@
 			);
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-AnotherMovieApp/Pods-AnotherMovieApp-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			inputPaths = (
 			);
 			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
@@ -592,10 +598,7 @@
 					"-DFOLLY_CFG_NO_COROUTINES=1",
 					"-DFOLLY_HAVE_CLOCK_GETTIME=1",
 				);
-				OTHER_LDFLAGS = (
-					"$(inherited)",
-					" ",
-				);
+				OTHER_LDFLAGS = "$(inherited)  ";
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
 				USE_HERMES = true;
@@ -667,10 +670,7 @@
 					"-DFOLLY_CFG_NO_COROUTINES=1",
 					"-DFOLLY_HAVE_CLOCK_GETTIME=1",
 				);
-				OTHER_LDFLAGS = (
-					"$(inherited)",
-					" ",
-				);
+				OTHER_LDFLAGS = "$(inherited)  ";
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
 				USE_HERMES = true;

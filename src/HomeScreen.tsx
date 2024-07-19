@@ -6,7 +6,7 @@
  */
 
 import React from 'react';
-import {Button, SafeAreaView, StyleSheet} from 'react-native';
+import {SafeAreaView, StyleSheet} from 'react-native';
 import {MovieListView} from 'react-native-movie-list';
 
 const movies = [
@@ -48,7 +48,6 @@ const movies = [
 ];
 
 export const HomeScreen = () => {
-  const [checkInit, setIsCheckInit] = React.useState(true);
   return (
     <SafeAreaView style={styles.container}>
       <MovieListView movies={movies} style={StyleSheet.absoluteFill} />
