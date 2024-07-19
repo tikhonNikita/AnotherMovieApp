@@ -24,11 +24,6 @@ struct MovieList: View {
             }
             .listStyle(PlainListStyle())
             .padding(8)
-            
-            Button("Open Sheet") {
-                isOpen.toggle()
-            }
-            .padding()
         }
         .sheet(isPresented: $isOpen) {
             Text("Hello World")

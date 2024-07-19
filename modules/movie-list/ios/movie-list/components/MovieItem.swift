@@ -26,7 +26,6 @@ struct MovieItem: View {
                     Text(movie.title)
                         .font(.headline)
                         .fontWeight(.bold)
-                    
                     Spacer()
                     
                     MovieRating(rating: movie.rating)
