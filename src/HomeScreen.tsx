@@ -51,11 +51,7 @@ export const HomeScreen = () => {
   const [checkInit, setIsCheckInit] = React.useState(true);
   return (
     <SafeAreaView style={styles.container}>
-      {checkInit ? (
-        <MovieListView movies={movies} style={StyleSheet.absoluteFill} />
-      ) : (
-        <Button title="Check Init" onPress={() => setIsCheckInit(true)} />
-      )}
+      <MovieListView movies={movies} style={StyleSheet.absoluteFill} />
     </SafeAreaView>
   );
 };
