@@ -5,6 +5,7 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {FavoritesScreen} from './src/FavoritesScreen';
 import MaterialIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {RouteProp} from '@react-navigation/native';
+import {QueryClient, QueryClientProvider} from '@tanstack/react-query';
 
 const Tab = createBottomTabNavigator();
 
@@ -30,19 +31,23 @@ const getTabBarIcon =
     return <MaterialIcons name={iconName} size={size} color={color} />;
   };
 
+const queryClient = new QueryClient();
+
 const App: React.FC = () => {
   return (
-    <NavigationContainer>
-      <Tab.Navigator
-        screenOptions={({route}) => ({
-          tabBarIcon: getTabBarIcon(route),
-          tabBarActiveTintColor: '#007aff',
-          tabBarInactiveTintColor: 'gray',
-        })}>
-        <Tab.Screen name="Home" component={HomeScreen} />
-        <Tab.Screen name="Favorites" component={FavoritesScreen} />
-      </Tab.Navigator>
-    </NavigationContainer>
+    <QueryClientProvider client={queryClient}>
+      <NavigationContainer>
+        <Tab.Navigator
+          screenOptions={({route}) => ({
+            tabBarIcon: getTabBarIcon(route),
+            tabBarActiveTintColor: '#007aff',
+            tabBarInactiveTintColor: 'gray',
+          })}>
+          <Tab.Screen name="Home" component={HomeScreen} />
+          <Tab.Screen name="Favorites" component={FavoritesScreen} />
+        </Tab.Navigator>
+      </NavigationContainer>
+    </QueryClientProvider>
   );
 };
 
