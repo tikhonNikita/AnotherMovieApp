@@ -28,6 +28,10 @@ import SwiftUI
     @objc public func updateMovies(movies: [Movie]) -> Void {
         self.viewModel.updateMovies(newMovies: movies)
     }
+    
+    @objc public func updateStatus(status: MovieListStatus) -> Void {
+        self.viewModel.updateStatus(status: status)
+    }
 
 
     private func setupHostingController() {

@@ -13,17 +13,21 @@ struct MovieList: View {
 
     var body: some View {
         VStack {
-            List(viewModel.movies) { movie in
-                MovieItem(movie: movie)
-                    .padding(.vertical, 4)
-                    .listRowInsets(EdgeInsets())
-                    .listRowSeparator(.hidden)
-                    .onTapGesture {
-                        isOpen = true;
-                    }
+            if(viewModel.movieListStatus != .loading) {
+                List(viewModel.movies) { movie in
+                    MovieItem(movie: movie)
+                        .padding(.vertical, 4)
+                        .listRowInsets(EdgeInsets())
+                        .listRowSeparator(.hidden)
+                        .onTapGesture {
+                            isOpen = true;
+                        }
+                }
+                .listStyle(PlainListStyle())
+                .padding(8)
+            } else {
+                ProgressView()
             }
-            .listStyle(PlainListStyle())
-            .padding(8)
         }
         .sheet(isPresented: $isOpen) {
             Text("Hello World")

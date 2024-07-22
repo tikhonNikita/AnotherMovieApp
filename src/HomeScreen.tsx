@@ -1,10 +1,3 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- */
-
 import React from 'react';
 import {SafeAreaView, StyleSheet} from 'react-native';
 import {MovieListView} from 'react-native-movie-list';
@@ -50,7 +43,11 @@ const movies = [
 export const HomeScreen = () => {
   return (
     <SafeAreaView style={styles.container}>
-      <MovieListView movies={movies} style={StyleSheet.absoluteFill} />
+      <MovieListView
+        movies={movies}
+        style={StyleSheet.absoluteFill}
+        movieListStatus={'success'}
+      />
     </SafeAreaView>
   );
 };
@@ -60,6 +57,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#F5FCFF',
+    backgroundColor: 'green',
   },
 });

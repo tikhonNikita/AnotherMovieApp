@@ -48,9 +48,16 @@ using namespace facebook::react;
     const auto &oldViewProps = *std::static_pointer_cast<MovieListViewProps const>(_props);
     const auto &newViewProps = *std::static_pointer_cast<MovieListViewProps const>(props);
     
-    //TODO: add comparation between old and new movies
-    NSArray<Movie *> *moviesArray = [self convertToNSArray:newViewProps.movies];
-    [_movie_list_view_controller updateMoviesWithMovies:moviesArray];
+    if(oldViewProps.movieListStatus != newViewProps.movieListStatus) {
+        NSLog(@"STATUS changed");
+        MovieListStatus status = [self convertToMovieModelStatus:newViewProps.movieListStatus];
+        [_movie_list_view_controller updateStatusWithStatus:status];
+    }
+    
+
+        NSArray<Movie *> *newMoviesArray = [self convertToNSArray:newViewProps.movies];
+        [_movie_list_view_controller updateMoviesWithMovies:newMoviesArray];
+    
     
     [super updateProps:props oldProps:oldProps];
 }
@@ -105,6 +112,20 @@ Class<RCTComponentViewProtocol> MovieListViewCls(void)
     }
 
     return [moviesArray copy];
+}
+
+- (MovieListStatus)convertToMovieModelStatus:(MovieListViewMovieListStatus) status {
+    switch (status) {
+        case MovieListViewMovieListStatus::Loading:
+            return [MovieListStatusHelper createLoading];
+            break;
+        case MovieListViewMovieListStatus::Error:
+            return [MovieListStatusHelper createError];
+            break;
+        case MovieListViewMovieListStatus::Success:
+            return [MovieListStatusHelper createSuccess];
+            break;
+    }
 }
 
 @end
