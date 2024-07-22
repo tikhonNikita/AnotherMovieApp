@@ -8,6 +8,5 @@
 @implementation MovieListViewManager
 
 RCT_EXPORT_MODULE(MovieListView)
-RCT_EXPORT_VIEW_PROPERTY(color, NSArray)
 
 @end
