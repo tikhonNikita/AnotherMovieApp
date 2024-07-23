@@ -15,17 +15,36 @@ type Movie = {
   readonly rating: Double;
 };
 
+type Genre = {
+  id: Int32;
+  name: string;
+};
+
+type MovieDetails = {
+  readonly id: Int32;
+  readonly title: string;
+  readonly posterURL: string;
+  readonly overview: string;
+  readonly genres: Genre[];
+};
+
 type OnMoviePressEventData = {
   readonly movieID: string;
 };
 
+type OnMovieAddedToFavorites = {
+  readonly movieID: string;
+};
+
+type NetworkStatus = WithDefault<'loading' | 'success' | 'error', 'loading'>;
+
 interface NativeProps extends ViewProps {
   readonly movies: Movie[];
   readonly onMoviePress: DirectEventHandler<OnMoviePressEventData>;
-  readonly movieListStatus?: WithDefault<
-    'loading' | 'success' | 'error',
-    'loading'
-  >;
+  readonly onMovieAddedToFavorites: DirectEventHandler<OnMovieAddedToFavorites>;
+  readonly movieListStatus?: NetworkStatus;
+  readonly movieDetailsStatus?: NetworkStatus;
+  readonly movieDetails?: MovieDetails;
 }
 
 export default codegenNativeComponent<NativeProps>('MovieListView');
