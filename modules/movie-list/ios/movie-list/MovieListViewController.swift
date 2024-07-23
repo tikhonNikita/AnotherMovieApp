@@ -29,7 +29,7 @@ import SwiftUI
         self.viewModel.updateMovies(newMovies: movies)
     }
     
-    @objc public func updateStatus(status: MovieListStatus) -> Void {
+    @objc public func updateStatus(status: NetworkStatus) -> Void {
         self.viewModel.updateStatus(status: status)
     }
 

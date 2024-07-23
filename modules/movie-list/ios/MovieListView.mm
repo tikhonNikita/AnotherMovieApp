@@ -50,7 +50,7 @@ using namespace facebook::react;
     
     if(oldViewProps.movieListStatus != newViewProps.movieListStatus) {
         NSLog(@"STATUS changed");
-        MovieListStatus status = [self convertToMovieModelStatus:newViewProps.movieListStatus];
+        NetworkStatus status = [self convertToMovieModelStatus:newViewProps.movieListStatus];
         [_movie_list_view_controller updateStatusWithStatus:status];
     }
     
@@ -114,16 +114,16 @@ Class<RCTComponentViewProtocol> MovieListViewCls(void)
     return [moviesArray copy];
 }
 
-- (MovieListStatus)convertToMovieModelStatus:(MovieListViewMovieListStatus) status {
+- (NetworkStatus)convertToMovieModelStatus:(MovieListViewMovieListStatus) status {
     switch (status) {
         case MovieListViewMovieListStatus::Loading:
-            return [MovieListStatusHelper createLoading];
+            return [NetworkStatusHelper createLoading];
             break;
         case MovieListViewMovieListStatus::Error:
-            return [MovieListStatusHelper createError];
+            return [NetworkStatusHelper createError];
             break;
         case MovieListViewMovieListStatus::Success:
-            return [MovieListStatusHelper createSuccess];
+            return [NetworkStatusHelper createSuccess];
             break;
     }
 }

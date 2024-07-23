@@ -27,7 +27,7 @@ const pendingToLoading = (status: 'success' | 'error' | 'pending'): Status => {
   }
   return status;
 };
-
+//https://image.tmdb.org/t/p/original/xOMo8BRK7PfcJv9JCnx7s5hj0PX.jpg
 const fetchMovies = async (): Promise<Movie[]> => {
   const urlParams = new URLSearchParams({api_key: API_KEY});
   const response = await fetch(
