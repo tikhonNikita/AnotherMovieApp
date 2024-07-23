@@ -20,8 +20,9 @@ import SwiftUI
         setupHostingController()
     }
 
-    @objc public static func createViewController() -> MovieListViewController {
+    @objc public static func createViewController(onMoviePress: @escaping (String) -> Void) -> MovieListViewController {
         let viewModel = MovieViewModel(movies: [])
+        viewModel.setOnPressHandler(onMoviePress: onMoviePress)
         return MovieListViewController(viewModel: viewModel)
     }
     

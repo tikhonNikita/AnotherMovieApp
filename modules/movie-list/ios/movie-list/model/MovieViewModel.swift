@@ -15,12 +15,14 @@ import SwiftUI
     case success
 }
 
-
+//Check if we need @objc here
 @objc public class MovieViewModel: NSObject, ObservableObject {
     @Published @objc public var movies: [Movie] = []
     @Published @objc public var selectedMovieDetails: MovieDetails?
     @Published @objc public var seletedMovieDetailsStatus: NetworkStatus
     @Published @objc public var movieListStatus: NetworkStatus
+    @Published var onMoviePress: ((String) -> Void)?
+
     
     @objc public override init() {
         self.movies = []
@@ -46,6 +48,10 @@ import SwiftUI
     
     @objc public func updateStatus(status: NetworkStatus) {
         self.movieListStatus = status
+    }
+    
+    public func setOnPressHandler(onMoviePress: ((String) -> Void)?) {
+        self.onMoviePress = onMoviePress
     }
 
 }

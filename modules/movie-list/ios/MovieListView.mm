@@ -25,15 +25,23 @@ using namespace facebook::react;
     return concreteComponentDescriptorProvider<MovieListViewComponentDescriptor>();
 }
 
-- (instancetype)initWithFrame:(CGRect)frame
-{
-    if (self = [super initWithFrame:frame]) {
+- (instancetype)initWithFrame:(CGRect)frame {
+    self = [super initWithFrame:frame];
+    if (self) {
         static const auto defaultProps = std::make_shared<const MovieListViewProps>();
         _props = defaultProps;
-        self->_movie_list_view_controller = [MovieListViewController createViewController];
+        
+        __weak MovieListView *weakSelf = self;
+        self->_movie_list_view_controller = [MovieListViewController createViewControllerOnMoviePress:^(NSString* movieId) {
+            __strong MovieListView *strongSelf = weakSelf;
+            if (strongSelf) {
+                [strongSelf onMoviePress:movieId];
+            }
+        }];
+        
         return self;
     }
-    return self;
+    return nil;
 }
 
 -(void)didMoveToWindow {
@@ -125,6 +133,17 @@ Class<RCTComponentViewProtocol> MovieListViewCls(void)
         case MovieListViewMovieListStatus::Success:
             return [NetworkStatusHelper createSuccess];
             break;
+    }
+}
+
+- (void)onMoviePress:(NSString *)movieId {
+    if (_eventEmitter != nullptr) {
+        auto emitter = std::dynamic_pointer_cast<const facebook::react::MovieListViewEventEmitter>(_eventEmitter);
+        if (emitter) {
+            const char *cString = [movieId UTF8String];
+                    std::string cppString(cString);
+            emitter->onMoviePress(facebook::react::MovieListViewEventEmitter::OnMoviePress{cppString});
+        }
     }
 }
 

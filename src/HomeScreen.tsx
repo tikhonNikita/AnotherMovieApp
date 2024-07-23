@@ -9,6 +9,9 @@ export const HomeScreen = () => {
   return (
     <SafeAreaView style={styles.container}>
       <MovieListView
+        onMoviePress={({nativeEvent: {movieID}}) => {
+          console.log(`Movie ID: ${movieID}`);
+        }}
         movies={data || []}
         style={StyleSheet.absoluteFill}
         movieListStatus={status}

@@ -21,6 +21,9 @@ struct MovieList: View {
                         .listRowSeparator(.hidden)
                         .onTapGesture {
                             isOpen = true;
+                            if let onMoviePress = viewModel.onMoviePress {
+                                onMoviePress(String(movie.id))
+                            }
                         }
                 }
                 .listStyle(PlainListStyle())
