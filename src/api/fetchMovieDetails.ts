@@ -9,6 +9,7 @@ type MovieDetailsResponse = {
   poster_path: string;
   overview: string;
   genres: {id: number; name: string}[];
+  vote_average: number;
 };
 
 export const fetchMovieDetails = async (
@@ -34,5 +35,6 @@ export const fetchMovieDetails = async (
     posterURL: `https://image.tmdb.org/t/p/original${data.poster_path}`,
     overview: data.overview,
     genres: data.genres,
+    rating: data.vote_average,
   };
 };

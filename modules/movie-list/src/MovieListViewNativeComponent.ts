@@ -26,6 +26,7 @@ type MovieDetails = {
   readonly posterURL: string;
   readonly overview: string;
   readonly genres: Genre[];
+  readonly rating: Double;
 };
 
 type OnMoviePressEventData = {

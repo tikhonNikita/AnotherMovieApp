@@ -1,16 +1,26 @@
 #import "MovieListView.h"
-
 #import <react/renderer/components/RNMovieListViewSpec/ComponentDescriptors.h>
 #import <react/renderer/components/RNMovieListViewSpec/EventEmitters.h>
 #import <react/renderer/components/RNMovieListViewSpec/Props.h>
 #import <react/renderer/components/RNMovieListViewSpec/RCTComponentViewHelpers.h>
-
 #import "RCTFabricComponentsPlugins.h"
-
-
 #import "React/RCTConversions.h"
 
 using namespace facebook::react;
+
+
+//TODO: refactor code - move helpers functionality to another class of file
+template <typename StatusType>
+NetworkStatus convertToMovieModelStatus(StatusType status) {
+    switch (status) {
+        case StatusType::Loading:
+            return [NetworkStatusHelper createLoading];
+        case StatusType::Error:
+            return [NetworkStatusHelper createError];
+        case StatusType::Success:
+            return [NetworkStatusHelper createSuccess];
+    }
+}
 
 @interface MovieListView () <RCTMovieListViewViewProtocol>
 @end
@@ -57,15 +67,27 @@ using namespace facebook::react;
     const auto &newViewProps = *std::static_pointer_cast<MovieListViewProps const>(props);
     
     if(oldViewProps.movieListStatus != newViewProps.movieListStatus) {
-        NSLog(@"STATUS changed");
-        NetworkStatus status = [self convertToMovieModelStatus:newViewProps.movieListStatus];
+        NSLog(@"STATUS changed, MOVIE LIST changed");
+        NetworkStatus status = convertToMovieModelStatus(newViewProps.movieListStatus);
         [_movie_list_view_controller updateMovieListStatusWithStatus:status];
+        
+        NSArray<Movie *> *newMoviesArray = [self convertToMoviesList:newViewProps.movies];
+        [_movie_list_view_controller updateMoviesWithMovies:newMoviesArray];
     }
     
-
-        NSArray<Movie *> *newMoviesArray = [self convertToNSArray:newViewProps.movies];
-        [_movie_list_view_controller updateMoviesWithMovies:newMoviesArray];
+    if(oldViewProps.movieDetailsStatus != newViewProps.movieDetailsStatus) {
+        NSLog(@"MOVIE DETAILS status changed");
+        NetworkStatus status = convertToMovieModelStatus(newViewProps.movieDetailsStatus);
+        [_movie_list_view_controller updateSelectedMovieDetailsStatusWithStatus:status];
+    }
     
+    const auto movieDetails = newViewProps.movieDetails;
+    
+    if(oldViewProps.movieDetails.id != newViewProps.movieDetails.id) {
+        NSLog(@"MOVIE DETAILS data changed");
+        const auto newMovieDetails = [self convertToMovieDetails:newViewProps.movieDetails];
+        [_movie_list_view_controller updateSelectedMovieDetailsWithSelectedMovie:newMovieDetails];
+    }
     
     [super updateProps:props oldProps:oldProps];
 }
@@ -101,15 +123,15 @@ Class<RCTComponentViewProtocol> MovieListViewCls(void)
             [swiftUIView.trailingAnchor constraintEqualToAnchor:self.trailingAnchor],
             [swiftUIView.bottomAnchor constraintEqualToAnchor:self.bottomAnchor]
         ]];
-
+        
         [parentViewController addChildViewController:_movie_list_view_controller];
         [_movie_list_view_controller didMoveToParentViewController:parentViewController];
     }
 }
 
-- (NSArray<Movie *> *)convertToNSArray:(const std::vector<MovieListViewMoviesStruct> &)moviesStruct {
+- (NSArray<Movie *> *)convertToMoviesList:(const std::vector<MovieListViewMoviesStruct> &)moviesStruct {
     NSMutableArray<Movie *> *moviesArray = [NSMutableArray arrayWithCapacity:moviesStruct.size()];
-
+    
     for (const auto &movieStruct : moviesStruct) {
         Movie *movie = [Movie createWithId:movieStruct.id
                                        url:[NSString stringWithUTF8String:movieStruct.url.c_str()]
@@ -118,22 +140,35 @@ Class<RCTComponentViewProtocol> MovieListViewCls(void)
                                     rating:movieStruct.rating];
         [moviesArray addObject:movie];
     }
-
+    
     return [moviesArray copy];
 }
 
-- (NetworkStatus)convertToMovieModelStatus:(MovieListViewMovieListStatus) status {
-    switch (status) {
-        case MovieListViewMovieListStatus::Loading:
-            return [NetworkStatusHelper createLoading];
-            break;
-        case MovieListViewMovieListStatus::Error:
-            return [NetworkStatusHelper createError];
-            break;
-        case MovieListViewMovieListStatus::Success:
-            return [NetworkStatusHelper createSuccess];
-            break;
+
+- (MovieDetails *)convertToMovieDetails:(const MovieListViewMovieDetailsStruct &)detailsStruct {
+    NSMutableArray<Genre *> *genresArray = [NSMutableArray arrayWithCapacity:detailsStruct.genres.size()];
+    
+    for (const auto &genreStruct : detailsStruct.genres) {
+        Genre *genre = [Genre createGenreWithId:genreStruct.id
+                                           name:[NSString stringWithUTF8String:genreStruct.name.c_str()]];
+        [genresArray addObject:genre];
     }
+    
+    MovieDetails *details = [MovieDetails createWithId:detailsStruct.id
+                                             posterURL:[NSString stringWithUTF8String:detailsStruct.posterURL.c_str()]
+                                                 title:[NSString stringWithUTF8String:detailsStruct.title.c_str()]
+                                              overview:[NSString stringWithUTF8String:detailsStruct.overview.c_str()]
+                                                rating: detailsStruct.rating
+                                                genres:genresArray];
+    return details;
+}
+
+- (NetworkStatus)convertToMovieModelStatus:(MovieListViewMovieListStatus) status {
+    return convertToMovieModelStatus<MovieListViewMovieListStatus>(status);
+}
+
+- (NetworkStatus)convertToMovieModelStatusFromDetails:(MovieListViewMovieDetailsStatus) status {
+    return convertToMovieModelStatus<MovieListViewMovieDetailsStatus>(status);
 }
 
 - (void)onMoviePress:(NSString *)movieId {
@@ -141,7 +176,7 @@ Class<RCTComponentViewProtocol> MovieListViewCls(void)
         auto emitter = std::dynamic_pointer_cast<const facebook::react::MovieListViewEventEmitter>(_eventEmitter);
         if (emitter) {
             const char *cString = [movieId UTF8String];
-                    std::string cppString(cString);
+            std::string cppString(cString);
             emitter->onMoviePress(facebook::react::MovieListViewEventEmitter::OnMoviePress{cppString});
         }
     }

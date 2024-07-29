@@ -33,6 +33,15 @@ import SwiftUI
     @objc public func updateMovieListStatus(status: NetworkStatus) -> Void {
         self.viewModel.updateMovieListStatus(status: status)
     }
+    
+    
+    @objc public func updateSelectedMovieDetailsStatus(status: NetworkStatus) -> Void {
+        self.viewModel.updateMovieDetailsStatus(status: status)
+    }
+    
+    @objc public func updateSelectedMovieDetails(selectedMovie: MovieDetails) -> Void {
+        self.viewModel.updateSelectedMovieDetails(newSelectedMovie: selectedMovie)
+    }
 
 
     private func setupHostingController() {

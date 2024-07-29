@@ -52,6 +52,14 @@ public class MovieViewModel: NSObject, ObservableObject {
     public func setOnPressHandler(onMoviePress: ((String) -> Void)?) {
         self.onMoviePress = onMoviePress
     }
+    
+    public func updateMovieDetailsStatus(status: NetworkStatus) {
+        self.seletedMovieDetailsStatus = status
+    }
+    
+    public func updateSelectedMovieDetails(newSelectedMovie: MovieDetails) {
+        self.selectedMovieDetails = newSelectedMovie
+    }
 
 }
 

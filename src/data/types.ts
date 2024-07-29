@@ -17,4 +17,5 @@ export interface MovieDetails {
   readonly posterURL: string;
   readonly overview: string;
   readonly genres: Genre[];
+  readonly rating: number;
 }
