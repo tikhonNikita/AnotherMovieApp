@@ -59,7 +59,7 @@ using namespace facebook::react;
     if(oldViewProps.movieListStatus != newViewProps.movieListStatus) {
         NSLog(@"STATUS changed");
         NetworkStatus status = [self convertToMovieModelStatus:newViewProps.movieListStatus];
-        [_movie_list_view_controller updateStatusWithStatus:status];
+        [_movie_list_view_controller updateMovieListStatusWithStatus:status];
     }
     
 

@@ -15,8 +15,7 @@ import SwiftUI
     case success
 }
 
-//Check if we need @objc here
-@objc public class MovieViewModel: NSObject, ObservableObject {
+public class MovieViewModel: NSObject, ObservableObject {
     @Published @objc public var movies: [Movie] = []
     @Published @objc public var selectedMovieDetails: MovieDetails?
     @Published @objc public var seletedMovieDetailsStatus: NetworkStatus
@@ -24,14 +23,14 @@ import SwiftUI
     @Published var onMoviePress: ((String) -> Void)?
 
     
-    @objc public override init() {
+    public override init() {
         self.movies = []
         self.movieListStatus = .loading
         self.seletedMovieDetailsStatus = .loading
         super.init()
     }
     
-    @objc public init(movies: [Movie]) {
+    public init(movies: [Movie]) {
         if(movies.isEmpty) {
             self.movieListStatus = .loading
         } else {
@@ -42,11 +41,11 @@ import SwiftUI
         self.movies = movies
     }
     
-    @objc public func updateMovies(newMovies: [Movie]) {
+    public func updateMovies(newMovies: [Movie]) {
         self.movies = newMovies
     }
     
-    @objc public func updateStatus(status: NetworkStatus) {
+    public func updateMovieListStatus(status: NetworkStatus) {
         self.movieListStatus = status
     }
     

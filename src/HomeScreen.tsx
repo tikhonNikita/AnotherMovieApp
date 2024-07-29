@@ -12,9 +12,6 @@ export const HomeScreen = () => {
   const {data: selectedMovieDetails, status: movieDetailsStatus} =
     useMovieDetails(selectedMovieId);
 
-  console.log('Details Data', selectedMovieDetails);
-  console.log('Status Data', movieDetailsStatus);
-
   return (
     <SafeAreaView style={styles.container}>
       <MovieListView

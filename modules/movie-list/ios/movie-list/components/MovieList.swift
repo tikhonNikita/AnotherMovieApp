@@ -33,9 +33,13 @@ struct MovieList: View {
             }
         }
         .sheet(isPresented: $isOpen) {
-            Text("Hello World")
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
-                .background(Color.white)
+            if(viewModel.seletedMovieDetailsStatus == .loading) {
+                ProgressView()
+            } else {
+                Text(viewModel.selectedMovieDetails?.title ?? "Empty")
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    .background(Color.white)
+            }
         }
     }
 }
