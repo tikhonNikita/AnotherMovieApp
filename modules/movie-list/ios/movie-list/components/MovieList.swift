@@ -36,9 +36,11 @@ struct MovieList: View {
             if(viewModel.seletedMovieDetailsStatus == .loading) {
                 ProgressView()
             } else {
-                Text(viewModel.selectedMovieDetails?.title ?? "Empty")
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
-                    .background(Color.white)
+                if let movieDetauls = viewModel.selectedMovieDetails {
+                    MovieDetailsView(movieDetails: movieDetauls)
+                } else {
+                    Text("Something went wrong")
+                }
             }
         }
     }
