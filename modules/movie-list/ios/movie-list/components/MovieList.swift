@@ -37,7 +37,9 @@ struct MovieList: View {
                 ProgressView()
             } else {
                 if let movieDetauls = viewModel.selectedMovieDetails {
-                    MovieDetailsView(movieDetails: movieDetauls)
+                    MovieDetailsView(movieDetails: movieDetauls) {
+                        isOpen = false
+                    }
                 } else {
                     Text("Something went wrong")
                 }

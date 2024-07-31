@@ -6,7 +6,6 @@
 //
 import SwiftUI
 
-//TODO: add close button
 //TODO: add ratings(see example in the notes)
 //TODO: add add to favorites button
 //TODO: improve description text styling. Maybe use another field
@@ -42,34 +41,55 @@ public struct RoundedBadge: View {
     }
 }
 
+struct TopActionIcon: View {
+    var icon: String
+    var action: (() -> Void)
+
+    var body: some View {
+        Button(action: action) {
+            HStack {
+                Image(systemName:icon).foregroundColor(.black)
+            }.padding(8).background(.thinMaterial).cornerRadius(15)
+        }
+    }
+}
 
 struct MovieDetailsView: View {
     let movieDetails: MovieDetails
+    let onClose: () -> Void
+    
     var body: some View {
-        ScrollView {
-            VStack(
-                alignment: .leading,
-                spacing: 8.0
-            ) {
-                AsyncImage(url: URL(string: movieDetails.posterURL)) { image in
-                    image.resizable()
-                } placeholder: {
-                    Color.gray.opacity(0.6)
-                }
-                .frame(height: 400)
-                VStack(alignment: .leading) {
-                    Text(movieDetails.title.uppercased())
-                        .foregroundStyle(.blue)
-                        .font(.system(size: 26, weight: .bold, design: .default))
-                    HStack {
-                        ForEach(movieDetails.genres) { genre in
-                            RoundedBadge(text: genre.name)
+            ScrollView {
+                ZStack(alignment: .topTrailing) {
+                    VStack(
+                        alignment: .leading,
+                        spacing: 8.0
+                    ) {
+                        AsyncImage(url: URL(string: movieDetails.posterURL)) { image in
+                            image.resizable()
+                        } placeholder: {
+                            Color.gray.opacity(0.6)
                         }
+                        .frame(height: 550)
+                        VStack(alignment: .leading) {
+                            Text(movieDetails.title.uppercased())
+                                .foregroundStyle(.blue)
+                                .font(.system(size: 26, weight: .bold, design: .default))
+                            HStack {
+                                ForEach(movieDetails.genres) { genre in
+                                    RoundedBadge(text: genre.name)
+                                }
+                            }
+                            Text(movieDetails.overview)
+                                .fontWeight(.medium)
+                                .fixedSize(horizontal: false, vertical: true)
+                        }.padding()
                     }
-                    Text(movieDetails.overview)
-                }.padding()
-            }
-        }.ignoresSafeArea()
-        
+                    TopActionIcon(
+                        icon: "xmark",
+                        action: {})
+                    .padding([.top, .trailing], 32)
+                }
+            }.ignoresSafeArea()
     }
 }
