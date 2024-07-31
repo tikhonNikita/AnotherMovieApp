@@ -5,6 +5,8 @@
 //  Created by Nikita Tikhonov on 30.07.2024.
 //
 import SwiftUI
+import SwiftUIIntrospect
+
 
 //TODO: add ratings(see example in the notes)
 //TODO: add add to favorites button
@@ -87,9 +89,12 @@ struct MovieDetailsView: View {
                     }
                     TopActionIcon(
                         icon: "xmark",
-                        action: {})
+                        action: onClose)
                     .padding([.top, .trailing], 32)
                 }
-            }.ignoresSafeArea()
+            }.introspect(.scrollView, on: .iOS(.v13, .v14, .v15, .v16, .v17, .v18)) { scrollView in
+                scrollView.bounces = false
+            }
+            .ignoresSafeArea()
     }
 }
