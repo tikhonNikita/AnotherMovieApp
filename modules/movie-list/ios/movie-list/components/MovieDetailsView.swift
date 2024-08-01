@@ -8,9 +8,7 @@ import SwiftUI
 import SwiftUIIntrospect
 
 
-//TODO: add ratings(see example in the notes)
 //TODO: add add to favorites button
-//TODO: improve description text styling. Maybe use another field
 
 
 public struct RoundedBadge: View {
@@ -59,6 +57,7 @@ struct TopActionIcon: View {
 struct MovieDetailsView: View {
     let movieDetails: MovieDetails
     let onClose: () -> Void
+    @State private var isFavourite = false
     
     var body: some View {
             ScrollView {
@@ -87,10 +86,17 @@ struct MovieDetailsView: View {
                                 .fixedSize(horizontal: false, vertical: true)
                         }.padding()
                     }
-                    TopActionIcon(
-                        icon: "xmark",
-                        action: onClose)
-                    .padding([.top, .trailing], 32)
+                    HStack {
+                        TopActionIcon(
+                            icon: isFavourite ?"star.fill" : "star",
+                            action: {
+                                isFavourite = !isFavourite
+                            })
+                        Spacer()
+                        TopActionIcon(
+                            icon: "xmark",
+                            action: onClose)
+                    }.padding([.top, .horizontal], 32)
                 }
             }.introspect(.scrollView, on: .iOS(.v13, .v14, .v15, .v16, .v17, .v18)) { scrollView in
                 scrollView.bounces = false
