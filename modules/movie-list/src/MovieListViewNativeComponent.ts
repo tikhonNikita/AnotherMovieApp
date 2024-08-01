@@ -27,6 +27,7 @@ type MovieDetails = {
   readonly overview: string;
   readonly genres: Genre[];
   readonly rating: Double;
+  readonly isFavourite: boolean;
 };
 
 type OnMoviePressEventData = {

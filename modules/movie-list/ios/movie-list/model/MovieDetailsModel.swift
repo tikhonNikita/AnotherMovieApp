@@ -28,16 +28,18 @@ import Foundation
     @objc public let title: String
     @objc public let overview: String
     @objc public let genres: [Genre]
+    @objc public let isFavourite: Bool
     
-    @objc init(id: Int, posterURL: String, title: String, overview: String, genres: [Genre]) {
+    @objc init(id: Int, posterURL: String, title: String, overview: String, genres: [Genre], isFavourite: Bool) {
         self.id = id
         self.posterURL = posterURL
         self.title = title
         self.overview = overview
         self.genres = genres
+        self.isFavourite = isFavourite
     }
     //need it to be able to create instance in Obj-c
-    @objc public static func create(id: Int, posterURL: String, title: String, overview: String, rating: Double, genres: [Genre]) -> MovieDetails {
-        return MovieDetails(id: id, posterURL: posterURL, title: title, overview: overview, genres: genres)
+    @objc public static func create(id: Int, posterURL: String, title: String, overview: String, rating: Double, genres: [Genre], isFavourite: Bool) -> MovieDetails {
+        return MovieDetails(id: id, posterURL: posterURL, title: title, overview: overview, genres: genres, isFavourite: isFavourite)
     }
 }

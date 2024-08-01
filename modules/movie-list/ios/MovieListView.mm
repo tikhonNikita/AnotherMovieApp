@@ -159,7 +159,9 @@ Class<RCTComponentViewProtocol> MovieListViewCls(void)
                                                  title:[NSString stringWithUTF8String:detailsStruct.title.c_str()]
                                               overview:[NSString stringWithUTF8String:detailsStruct.overview.c_str()]
                                                 rating: detailsStruct.rating
-                                                genres:genresArray];
+                                                genres:genresArray
+                                                isFavourite: detailsStruct.isFavourite
+    ];
     return details;
 }
 

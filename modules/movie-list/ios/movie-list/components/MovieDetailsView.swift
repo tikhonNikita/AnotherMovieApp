@@ -57,7 +57,6 @@ struct TopActionIcon: View {
 struct MovieDetailsView: View {
     let movieDetails: MovieDetails
     let onClose: () -> Void
-    @State private var isFavourite = false
     
     var body: some View {
             ScrollView {
@@ -88,10 +87,8 @@ struct MovieDetailsView: View {
                     }
                     HStack {
                         TopActionIcon(
-                            icon: isFavourite ?"star.fill" : "star",
-                            action: {
-                                isFavourite = !isFavourite
-                            })
+                            icon: movieDetails.isFavourite ?"star.fill" : "star",
+                            action: {})
                         Spacer()
                         TopActionIcon(
                             icon: "xmark",

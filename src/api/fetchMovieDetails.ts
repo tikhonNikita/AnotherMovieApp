@@ -36,5 +36,6 @@ export const fetchMovieDetails = async (
     overview: data.overview,
     genres: data.genres,
     rating: data.vote_average,
+    isFavourite: data.id % 2 === 0,
   };
 };

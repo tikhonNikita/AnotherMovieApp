@@ -18,4 +18,5 @@ export interface MovieDetails {
   readonly overview: string;
   readonly genres: Genre[];
   readonly rating: number;
+  readonly isFavourite: boolean;
 }
