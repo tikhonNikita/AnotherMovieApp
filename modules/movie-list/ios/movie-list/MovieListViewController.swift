@@ -20,6 +20,7 @@ import SwiftUI
         setupHostingController()
     }
 
+    //TODO: why we set movie OnCreate but not as prop?
     @objc public static func createViewController(onMoviePress: @escaping (String) -> Void) -> MovieListViewController {
         let viewModel = MovieViewModel(movies: [])
         viewModel.setOnPressHandler(onMoviePress: onMoviePress)
@@ -33,6 +34,15 @@ import SwiftUI
     @objc public func updateMovieListStatus(status: NetworkStatus) -> Void {
         self.viewModel.updateMovieListStatus(status: status)
     }
+    
+    @objc public func updateOnMovieAddedToFavoritesHandler(onMoviePress: @escaping (String) -> Void) {
+        self.viewModel.setOnMovieAddedToFavorites(onMovieAddedToFavorites: onMoviePress)
+    }
+    
+    @objc public func updateOnMovieRemovedFromFavoritesHandler(onMoviePress: @escaping (String) -> Void) {
+        self.viewModel.setOnMovieRemovedToFavorites(onMovieRemovedToFavorites: onMoviePress)
+    }
+    
     
     
     @objc public func updateSelectedMovieDetailsStatus(status: NetworkStatus) -> Void {

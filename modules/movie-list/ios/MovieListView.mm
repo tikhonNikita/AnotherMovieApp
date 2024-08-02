@@ -10,6 +10,7 @@ using namespace facebook::react;
 
 
 //TODO: refactor code - move helpers functionality to another class of file
+//TODO: refactor favourites functionality - we have number/string conversion. Probbably - not needed
 template <typename StatusType>
 NetworkStatus convertToMovieModelStatus(StatusType status) {
     switch (status) {
@@ -41,6 +42,7 @@ NetworkStatus convertToMovieModelStatus(StatusType status) {
         static const auto defaultProps = std::make_shared<const MovieListViewProps>();
         _props = defaultProps;
         
+        //TODO: move to updateProps
         __weak MovieListView *weakSelf = self;
         self->_movie_list_view_controller = [MovieListViewController createViewControllerOnMoviePress:^(NSString* movieId) {
             __strong MovieListView *strongSelf = weakSelf;
@@ -83,11 +85,25 @@ NetworkStatus convertToMovieModelStatus(StatusType status) {
     
     const auto movieDetails = newViewProps.movieDetails;
     
-    if(oldViewProps.movieDetails.id != newViewProps.movieDetails.id) {
-        NSLog(@"MOVIE DETAILS data changed");
-        const auto newMovieDetails = [self convertToMovieDetails:newViewProps.movieDetails];
-        [_movie_list_view_controller updateSelectedMovieDetailsWithSelectedMovie:newMovieDetails];
-    }
+    NSLog(@"MOVIE DETAILS data changed");
+    const auto newMovieDetails = [self convertToMovieDetails:newViewProps.movieDetails];
+    [_movie_list_view_controller updateSelectedMovieDetailsWithSelectedMovie:newMovieDetails];
+    
+    __weak MovieListView *weakSelf = self;
+    [_movie_list_view_controller updateOnMovieAddedToFavoritesHandlerOnMoviePress:^(NSString* movieId) {
+        __strong MovieListView *strongSelf = weakSelf;
+        if (strongSelf) {
+            [strongSelf onMovieAddedToFavourites:movieId];
+        }
+    }];
+    
+    [_movie_list_view_controller updateOnMovieRemovedFromFavoritesHandlerOnMoviePress:^(NSString* movieId) {
+        __strong MovieListView *strongSelf = weakSelf;
+        if (strongSelf) {
+            [strongSelf onMovieRemovedFromFavorites:movieId];
+        }
+    }];
+    
     
     [super updateProps:props oldProps:oldProps];
 }
@@ -160,7 +176,7 @@ Class<RCTComponentViewProtocol> MovieListViewCls(void)
                                               overview:[NSString stringWithUTF8String:detailsStruct.overview.c_str()]
                                                 rating: detailsStruct.rating
                                                 genres:genresArray
-                                                isFavourite: detailsStruct.isFavourite
+                                           isFavourite: detailsStruct.isFavourite
     ];
     return details;
 }
@@ -180,6 +196,28 @@ Class<RCTComponentViewProtocol> MovieListViewCls(void)
             const char *cString = [movieId UTF8String];
             std::string cppString(cString);
             emitter->onMoviePress(facebook::react::MovieListViewEventEmitter::OnMoviePress{cppString});
+        }
+    }
+}
+
+- (void)onMovieAddedToFavourites:(NSString *)movieId {
+    if (_eventEmitter != nullptr) {
+        auto emitter = std::dynamic_pointer_cast<const facebook::react::MovieListViewEventEmitter>(_eventEmitter);
+        if (emitter) {
+            const char *cString = [movieId UTF8String];
+            std::string cppString(cString);
+            emitter->onMovieAddedToFavorites(facebook::react::MovieListViewEventEmitter::OnMovieAddedToFavorites{cppString});
+        }
+    }
+}
+
+- (void)onMovieRemovedFromFavorites:(NSString *)movieId {
+    if (_eventEmitter != nullptr) {
+        auto emitter = std::dynamic_pointer_cast<const facebook::react::MovieListViewEventEmitter>(_eventEmitter);
+        if (emitter) {
+            const char *cString = [movieId UTF8String];
+            std::string cppString(cString);
+            emitter->onMovieRemovedFromFavorites(facebook::react::MovieListViewEventEmitter::OnMovieRemovedFromFavorites{cppString});
         }
     }
 }

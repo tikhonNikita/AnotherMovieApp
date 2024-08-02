@@ -56,6 +56,8 @@ struct TopActionIcon: View {
 
 struct MovieDetailsView: View {
     let movieDetails: MovieDetails
+    let onAddToFavourites: (String) -> Void
+    let onRemoveFromFavourites: (String) -> Void
     let onClose: () -> Void
     
     var body: some View {
@@ -87,8 +89,12 @@ struct MovieDetailsView: View {
                     }
                     HStack {
                         TopActionIcon(
-                            icon: movieDetails.isFavourite ?"star.fill" : "star",
-                            action: {})
+                            icon: movieDetails.isFavourite ? "star.fill" : "star",
+                            action: movieDetails.isFavourite ? {
+                                onRemoveFromFavourites(String(movieDetails.id))
+                            } : {
+                                onAddToFavourites(String(movieDetails.id))
+                            })
                         Spacer()
                         TopActionIcon(
                             icon: "xmark",

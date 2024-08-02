@@ -21,6 +21,8 @@ public class MovieViewModel: NSObject, ObservableObject {
     @Published @objc public var seletedMovieDetailsStatus: NetworkStatus
     @Published @objc public var movieListStatus: NetworkStatus
     @Published var onMoviePress: ((String) -> Void)?
+    @Published var onMovieAddedToFavorites: ((String) -> Void) = { _ in }
+    @Published var onMovieRemovedToFavorites: ((String) -> Void) = {_ in }
 
     
     public override init() {
@@ -49,8 +51,15 @@ public class MovieViewModel: NSObject, ObservableObject {
         self.movieListStatus = status
     }
     
-    public func setOnPressHandler(onMoviePress: ((String) -> Void)?) {
+    public func setOnPressHandler(onMoviePress: @escaping ((String) -> Void)) {
         self.onMoviePress = onMoviePress
+    }
+    
+    public func setOnMovieAddedToFavorites(onMovieAddedToFavorites: @escaping ((String) -> Void)) {
+        self.onMovieAddedToFavorites = onMovieAddedToFavorites
+    }
+    public func setOnMovieRemovedToFavorites(onMovieRemovedToFavorites: @escaping ((String) -> Void)) {
+        self.onMovieRemovedToFavorites = onMovieRemovedToFavorites
     }
     
     public func updateMovieDetailsStatus(status: NetworkStatus) {

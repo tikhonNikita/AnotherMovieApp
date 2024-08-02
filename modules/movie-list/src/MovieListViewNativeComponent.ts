@@ -38,12 +38,15 @@ type OnMovieAddedToFavorites = {
   readonly movieID: string;
 };
 
+type OnMovieRemovedFromFavorites = OnMovieAddedToFavorites;
+
 type NetworkStatus = WithDefault<'loading' | 'success' | 'error', 'loading'>;
 
 interface NativeProps extends ViewProps {
   readonly movies: Movie[];
   readonly onMoviePress: DirectEventHandler<OnMoviePressEventData>;
   readonly onMovieAddedToFavorites: DirectEventHandler<OnMovieAddedToFavorites>;
+  readonly onMovieRemovedFromFavorites: DirectEventHandler<OnMovieRemovedFromFavorites>;
   readonly movieListStatus?: NetworkStatus;
   readonly movieDetailsStatus?: NetworkStatus;
   readonly movieDetails?: MovieDetails;
