@@ -104,6 +104,6 @@ struct MovieDetailsView: View {
             }.introspect(.scrollView, on: .iOS(.v13, .v14, .v15, .v16, .v17, .v18)) { scrollView in
                 scrollView.bounces = false
             }
-            .ignoresSafeArea()
+            .ignoresSafeArea(edges:[.top])
     }
 }
