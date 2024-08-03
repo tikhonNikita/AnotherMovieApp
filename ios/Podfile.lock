@@ -955,6 +955,7 @@ PODS:
     - React-utils
     - ReactCommon/turbomodule/bridging
     - ReactCommon/turbomodule/core
+    - RealmSwift (~> 10)
     - SwiftUIIntrospect
     - Yoga
   - react-native-safe-area-context (4.10.8):
@@ -1252,6 +1253,11 @@ PODS:
     - React-logger (= 0.74.4)
     - React-perflogger (= 0.74.4)
     - React-utils (= 0.74.4)
+  - Realm (10.52.2):
+    - Realm/Headers (= 10.52.2)
+  - Realm/Headers (10.52.2)
+  - RealmSwift (10.52.2):
+    - Realm (= 10.52.2)
   - RNScreens (3.32.0):
     - DoubleConversion
     - glog
@@ -1359,11 +1365,15 @@ DEPENDENCIES:
   - React-runtimescheduler (from `../node_modules/react-native/ReactCommon/react/renderer/runtimescheduler`)
   - React-utils (from `../node_modules/react-native/ReactCommon/react/utils`)
   - ReactCommon/turbomodule/core (from `../node_modules/react-native/ReactCommon`)
+  - Realm (~> 10)
+  - RealmSwift (~> 10)
   - RNScreens (from `../node_modules/react-native-screens`)
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
 SPEC REPOS:
   trunk:
+    - Realm
+    - RealmSwift
     - SocketRocket
     - SwiftUIIntrospect
 
@@ -1515,7 +1525,7 @@ SPEC CHECKSUMS:
   React-jsitracing: 4e9c99e73a6269b27b0d4cbab277dd90df3e5ac0
   React-logger: fbfb50e2a2b1b46ee087f0a52739fadecc5e81a4
   React-Mapbuffer: d39610dff659d8cf1fea485abae08bbf6f9c8279
-  react-native-movie-list: f5c8d63ed40da72f60f03239e72b7040967a42f2
+  react-native-movie-list: 8a4d58c99dedc42e68fb2afa6151bbcf69dc9331
   react-native-safe-area-context: 1c0114777144dc0724820de71fe99c2e1e293a37
   React-nativeconfig: 2be4363c2c4ac2b42419577774e83e4e4fd2af9f
   React-NativeModulesApple: 453ada38f826a508e48872c7a7877c431af48bba
@@ -1540,11 +1550,13 @@ SPEC CHECKSUMS:
   React-runtimescheduler: 3f312d33f475467a59864e0c5ab8708461387d1c
   React-utils: e8b0eac797c81c574b24f6515fec4015599b643c
   ReactCommon: eebffb37a90138c6db6eb8b2d952e7e5c6bc083c
+  Realm: e44eb7d20fe469fe1179894fd356727b8fbe61c2
+  RealmSwift: 7aacbd3101158f7d54c930bcfcfaafadbd376ffc
   RNScreens: d3d50aa84db4541eee00fbb1f32151030f56c510
   SocketRocket: abac6f5de4d4d62d24e11868d7a2f427e0ef940d
   SwiftUIIntrospect: fee9aa07293ee280373a591e1824e8ddc869ba5d
   Yoga: 6259f968a4fdf516d76a4432dead624d71aa0fb1
 
-PODFILE CHECKSUM: 43b624a7b1c657693d516280e4608b552a24ae5d
+PODFILE CHECKSUM: a0839cdb1182fbab511b535eea4ba2ed5ca4efb3
 
 COCOAPODS: 1.14.3

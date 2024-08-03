@@ -25,6 +25,7 @@ Pod::Spec.new do |s|
   if respond_to?(:install_modules_dependencies, true)
     install_modules_dependencies(s)
     s.dependency "SwiftUIIntrospect"
+    s.dependency "RealmSwift", '~> 10'
   else
     s.dependency "React-Core"
 

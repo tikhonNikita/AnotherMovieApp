@@ -19,6 +19,9 @@ if linkage != nil
   use_frameworks! :linkage => linkage.to_sym
 end
 
+pod 'Realm', '~>10', :modular_headers => true
+pod 'RealmSwift', '~> 10'
+
 target 'AnotherMovieApp' do
   config = use_native_modules!
 
