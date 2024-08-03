@@ -1,8 +1,8 @@
 #import "MovieListView.h"
-#import <react/renderer/components/RNMovieListViewSpec/ComponentDescriptors.h>
-#import <react/renderer/components/RNMovieListViewSpec/EventEmitters.h>
-#import <react/renderer/components/RNMovieListViewSpec/Props.h>
-#import <react/renderer/components/RNMovieListViewSpec/RCTComponentViewHelpers.h>
+#import <react/renderer/components/RNMovieList/ComponentDescriptors.h>
+#import <react/renderer/components/RNMovieList/EventEmitters.h>
+#import <react/renderer/components/RNMovieList/Props.h>
+#import <react/renderer/components/RNMovieList/RCTComponentViewHelpers.h>
 #import "RCTFabricComponentsPlugins.h"
 #import "React/RCTConversions.h"
 

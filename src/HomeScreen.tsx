@@ -1,6 +1,6 @@
 import React from 'react';
 import {SafeAreaView, StyleSheet} from 'react-native';
-import {MovieListView} from 'react-native-movie-list';
+import {MovieListView, multiply} from 'react-native-movie-list';
 import {useMovies} from './data/useMovieList';
 import {useMovieDetails} from './data/useMovieDetails';
 import {MovieDetails} from './data/types';

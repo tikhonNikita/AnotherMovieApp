@@ -4,8 +4,8 @@
   "description": "SwiftUI based movie list",
   "main": "src/index",
   "codegenConfig": {
-    "name": "RNMovieListViewSpec",
-    "type": "components",
+    "name": "RNMovieList",
+    "type": "all",
     "jsSrcsDir": "src"
   },
   "author": " <> ()",
