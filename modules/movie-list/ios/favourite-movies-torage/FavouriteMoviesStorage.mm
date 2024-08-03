@@ -1,12 +1,11 @@
 #import "FavouriteMoviesStorage.h"
 
+
 @implementation FavouriteMoviesStorage
 RCT_EXPORT_MODULE()
 
-// Don't compile this code when we build for the old architecture.
-#ifdef RCT_NEW_ARCH_ENABLED
 - (NSNumber *)multiply:(double)a b:(double)b {
-    NSNumber *result = @(a * b);
+    NSNumber *result = @([Calculator addWithA:a b:b]);
 
     return result;
 }
@@ -16,6 +15,5 @@ RCT_EXPORT_MODULE()
 {
     return std::make_shared<facebook::react::NativeFavouriteMoviesStorageSpecJSI>(params);
 }
-#endif
 
 @end
