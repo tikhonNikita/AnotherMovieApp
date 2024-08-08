@@ -8,56 +8,97 @@
 import Foundation
 import RealmSwift
 
-class FavouriteMoviesManager {
-    static let shared = FavouriteMoviesManager()
-    private var realm: Realm
+@objc
+public class FavouriteMoviesManager: NSObject {
+    @objc public static let shared = FavouriteMoviesManager()
 
-    private init() {
-        realm = try! Realm()
+    private override init() {}
+
+    @objc
+    public func addFavouriteMovie(_ movie: IntermediateFavouriteMovie, onSuccess: @escaping ([IntermediateFavouriteMovie]) -> Void, onError: @escaping (Error) -> Void) {
+        let realmMovie = RealmFavouriteMovie(favouriteMovie: movie)
+        DispatchQueue.main.async {
+            do {
+                let realm = try Realm()
+                realm.writeAsync({
+                    realm.add(realmMovie, update: .modified)
+                }, onComplete: { error in
+                    if let error = error {
+                        DispatchQueue.main.async {
+                            onError(error)
+                        }
+                    } else {
+                        let movies = realm.objects(RealmFavouriteMovie.self).map { IntermediateFavouriteMovie(realmMovie: $0) }
+                        DispatchQueue.main.async {
+                            onSuccess(Array(movies))
+                        }
+                    }
+                })
+            } catch {
+                DispatchQueue.main.async {
+                    onError(error)
+                }
+            }
+        }
     }
 
-    func addFavouriteMovie(_ movie: FavouriteMovie, onSuccess: @escaping () -> Void, onError: @escaping (Error) -> Void) {
-        do {
-            let realm = try Realm()
-            realm.writeAsync({
-                realm.add(movie)
-            }, onComplete: { error in
-                if let error = error {
+    @objc
+    public func removeFavouriteMovie(byID movieID: Int, onSuccess: @escaping ([IntermediateFavouriteMovie]) -> Void, onError: @escaping (Error) -> Void) {
+        DispatchQueue.main.async {
+            do {
+                let realm = try Realm()
+                realm.writeAsync({
+                    if let movie = realm.object(ofType: RealmFavouriteMovie.self, forPrimaryKey: movieID) {
+                        realm.delete(movie)
+                    }
+                }, onComplete: { error in
+                    if let error = error {
+                        DispatchQueue.main.async {
+                            onError(error)
+                        }
+                    } else {
+                        let movies = realm.objects(RealmFavouriteMovie.self).map { IntermediateFavouriteMovie(realmMovie: $0) }
+                        DispatchQueue.main.async {
+                            onSuccess(Array(movies))
+                        }
+                    }
+                })
+            } catch {
+                DispatchQueue.main.async {
                     onError(error)
-                } else {
+                }
+            }
+        }
+    }
+
+    @objc
+    public func removeAllFavouriteMovies(onSuccess: @escaping () -> Void, onError: @escaping (Error) -> Void) {
+        DispatchQueue.global(qos: .background).async {
+            do {
+                let realm = try Realm()
+                let allMovies = realm.objects(RealmFavouriteMovie.self)
+                try realm.write {
+                    realm.delete(allMovies)
+                }
+                DispatchQueue.main.async {
                     onSuccess()
                 }
-            })
-        } catch {
-            onError(error)
+            } catch {
+                DispatchQueue.main.async {
+                    onError(error)
+                }
+            }
         }
     }
 
-    func removeFavouriteMovie(byID movieID: Int, onSuccess: @escaping () -> Void, onError: @escaping (Error) -> Void) {
+    @objc
+    public func fetchAllFavouriteMoviesAsList() -> [IntermediateFavouriteMovie] {
         do {
             let realm = try Realm()
-            let movie = realm.object(ofType: FavouriteMovie.self, forPrimaryKey: movieID)
-            realm.writeAsync({
-                if let movie = movie {
-                    realm.delete(movie)
-                }
-            }, onComplete: { error in
-                if let error = error {
-                    onError(error)
-                } else {
-                    if movie != nil {
-                        onSuccess()
-                    } else {
-                        onError(NSError(domain: "FavouriteMovieManager", code: 404, userInfo: [NSLocalizedDescriptionKey: "Movie not found"]))
-                    }
-                }
-            })
+            let movies = realm.objects(RealmFavouriteMovie.self).map { IntermediateFavouriteMovie(realmMovie: $0) }
+            return Array(movies)
         } catch {
-            onError(error)
+            return []
         }
-    }
-
-    func fetchAllFavouriteMovies() -> Results<FavouriteMovie> {
-        return realm.objects(FavouriteMovie.self)
     }
 }

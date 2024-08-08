@@ -8,7 +8,7 @@
 import Foundation
 import RealmSwift
 
-class FavouriteMovie: Object {
+class RealmFavouriteMovie: Object {
     @Persisted(primaryKey: true) var id: Int
     @Persisted var url: String = ""
     @Persisted var status: String = ""
@@ -26,5 +26,14 @@ class FavouriteMovie: Object {
         self.status = status
         self.title = title
         self.rating = rating
+    }
+
+    convenience init(favouriteMovie: IntermediateFavouriteMovie) {
+        self.init()
+        self.id = favouriteMovie.id
+        self.url = favouriteMovie.url
+        self.status = favouriteMovie.status
+        self.title = favouriteMovie.title
+        self.rating = favouriteMovie.rating
     }
 }
